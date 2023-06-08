@@ -8,7 +8,6 @@ RIGHT = 0
 class Snake:
     def __init__(self):
         self.snake = []
-        self.is_the_game_on = True
 
     def start_game(self):
         for i in range(3):
@@ -19,6 +18,23 @@ class Snake:
             turtle.goto(-i*20, 0)
             self.snake.append(turtle)
 
+    def grow(self):
+        turtle = Turtle()
+        turtle.shape('square')
+        turtle.color('white')
+        turtle.penup()
+        
+        if self.snake[-1].heading() == UP:
+            turtle.goto(self.snake[-1].xcor(), self.snake[0].ycor()-20)        
+        if self.snake[-1].heading() == DOWN:
+            turtle.goto(self.snake[-1].xcor(), self.snake[0].ycor()+20)        
+        if self.snake[-1].heading() == LEFT:
+            turtle.goto(self.snake[-1].xcor()+20, self.snake[0].ycor())        
+        if self.snake[-1].heading() == UP:
+            turtle.goto(self.snake[-1].xcor()-20, self.snake[0].ycor())  
+            
+        self.snake.append(turtle)  
+                
     def move(self):
         for i in range(len(self.snake)-1, 0, -1):
             self.snake[i].goto(self.snake[i-1].pos())

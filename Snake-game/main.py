@@ -30,7 +30,9 @@ def main():
         time.sleep(0.1)
         snake.move()
         if food.distance(snake.snake[0]) < 15:
-            scoreboard.update_score
+            scoreboard.score += 1
+            snake.grow()
+            scoreboard.update_score()
             food.reset_food()
 
 
