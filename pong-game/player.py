@@ -5,6 +5,7 @@ LENGTH_OF_BOARD = 3
 
 class Player(Turtle):
     def __init__(self, playerpos):
+        super().__init__()
         self.board = []
         self.playerpos = playerpos
         
