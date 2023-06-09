@@ -12,9 +12,9 @@ screen.tracer(0)
 
 def main():
     game_is_on = True
-    player1 = Player(1)
-    player2 = Player(2)
-    ball = Ball()
+    player1    = Player(1)
+    player2    = Player(2)
+    ball       = Ball(1,1)
     scoreboard = Scoreboard()
     
     player1.create_player()
@@ -30,16 +30,28 @@ def main():
     # game is running
     while game_is_on:
         screen.update()
-        time.sleep(0.1)
-        ball.move()
+        time.sleep(.2)
+            
+        if player1.distance(ball) < 15:
+            scoreboard.score_1 += 1
+            if ball.ydir == -1: 
+                ball.ydir = 1
+            ball.bounce()
+        elif player2.distance(ball) < 15: 
+            scoreboard.score_2 += 1
+            ball.direction = -1
+            ball.bounce()
+        else:
+            ball.move()
+            
+        scoreboard.update_score()
         
-        for i in range(3):
-            if player1.board[i].distance(ball) < 15 or player2.board[i].distance(ball) < 15:
-                ball.bounce(ball.heading())
-        
-        if ball.xcor() >= 290 or ball.xcor() <= -290 or ball.ycor() <= -290 or ball.ycor() >= 290:    
+        if ball.xcor() >= 290 or ball.xcor() <= -290:    
             game_is_on = False
             scoreboard.game_over()
+            
+        if ball.ycor() <= -290 or ball.ycor() >= 290:
+            ball.bounce()
 
 if __name__ == '__main__':
     main()
