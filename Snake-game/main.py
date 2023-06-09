@@ -28,13 +28,23 @@ def main():
     while game_is_on:
         screen.update()
         time.sleep(0.1)
-        snake.move()
         if food.distance(snake.snake[0]) < 15:
             scoreboard.score += 1
             snake.grow()
             scoreboard.update_score()
             food.reset_food()
-
+        snake.move()
+        # Detect collison with wall
+        if snake.snake[0].xcor() > 280 or snake.snake[0].xcor() < -280 or snake.snake[0].ycor() > 280 or snake.snake[0].ycor() < -280: 
+            scoreboard.game_over()
+            game_is_on = False
+            
+        # Detect collion with the tail
+        for _ in range(len(snake.snake)-1):
+            if snake.snake[0].distance(snake.snake[_+1]) < 10:
+                scoreboard.game_over()
+                game_is_on = False
+        
 
 if __name__ == '__main__':
     main()

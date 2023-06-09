@@ -21,7 +21,6 @@ class Snake:
     def grow(self):
         turtle = Turtle()
         turtle.shape('square')
-        turtle.color('white')
         turtle.penup()
         
         if self.snake[-1].heading() == UP:
@@ -32,7 +31,8 @@ class Snake:
             turtle.goto(self.snake[-1].xcor()+20, self.snake[0].ycor())        
         if self.snake[-1].heading() == UP:
             turtle.goto(self.snake[-1].xcor()-20, self.snake[0].ycor())  
-            
+         
+        turtle.color('white')    
         self.snake.append(turtle)  
                 
     def move(self):
