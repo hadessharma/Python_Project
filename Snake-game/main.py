@@ -40,8 +40,8 @@ def main():
             game_is_on = False
             
         # Detect collion with the tail
-        for _ in range(len(snake.snake)-1):
-            if snake.snake[0].distance(snake.snake[_+1]) < 10:
+        for segment in snake.snake[1:]:
+            if snake.snake[0].distance(segment) < 10:
                 scoreboard.game_over()
                 game_is_on = False
         
