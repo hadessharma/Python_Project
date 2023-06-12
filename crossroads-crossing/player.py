@@ -8,7 +8,6 @@ class Player(Turtle):
         self.setheading(90)
         self.reset()
         
-
     def reset(self):
         self.goto(0, -280)
 
