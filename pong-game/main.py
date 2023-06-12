@@ -32,14 +32,15 @@ def main():
         screen.update()
         time.sleep(.2)
             
-        if player1.distance(ball) < 15:
+        if player1.distance(ball) < 20:
             scoreboard.score_1 += 1
-            if ball.ydir == -1: 
-                ball.ydir = 1
+            #ball.ydir           = -ball.ydir
+            ball.xdir           = 1
             ball.bounce()
-        elif player2.distance(ball) < 15: 
+        elif player2.distance(ball) < 20: 
             scoreboard.score_2 += 1
-            ball.direction = -1
+            #ball.ydir           = -ball.ydir
+            ball.xdir           = -1
             ball.bounce()
         else:
             ball.move()
@@ -47,10 +48,11 @@ def main():
         scoreboard.update_score()
         
         if ball.xcor() >= 290 or ball.xcor() <= -290:    
-            game_is_on = False
-            scoreboard.game_over()
+            ball.goto(0,0)
+            ball.xdir = -ball.xdir
             
         if ball.ycor() <= -290 or ball.ycor() >= 290:
+            ball.ydir = -ball.ydir
             ball.bounce()
 
 if __name__ == '__main__':
