@@ -5,9 +5,11 @@ DOWN  = 270
 LEFT  = 180
 RIGHT = 0
 
-class Snake:
+class Snake(Turtle):
     def __init__(self):
+        super().__init__()
         self.snake = []
+        self.start_game()
 
     def start_game(self):
         for i in range(3):
@@ -56,6 +58,12 @@ class Snake:
         if self.snake[0].heading() != LEFT:
             self.snake[0].setheading(RIGHT)
 
+    def reset(self):
+        for segments in self.snake:
+            segments.hideturtle()
+        self.snake = []
+        self.start_game()
+        
 
 def main():
     pass
