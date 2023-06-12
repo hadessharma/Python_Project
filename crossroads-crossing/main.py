@@ -5,18 +5,33 @@ from cars import Cars
 import time
 import random
 
-def game(screen, score) -> None:
+def game(screen, score, player) -> None:
     game_is_on = True
 
-    cars = [Cars('Red', i*30) for i in range(10)]
+    cars = Cars()
     while game_is_on:
         screen.update()
         time.sleep(0.1)
         f = random.randint(1, 10)
-        for i in range(f):
-            cars[i].move_cars()
+        
+        # if player crosses finish line
+        if player.ycor() > 270:
+            player.reset()
+            # update score
+            score.score += 1
+            score.update_score()
+            cars.level += 1
+
+        # move the cars continuosly    
+        cars.move_cars()
+
+        # check for collsions
+        for car in cars.cars:
+            if car.distance(player) < 25:
+                score.game_over()
+                game_is_on = False
+
             
-        pass    
 
 def main():
     
@@ -33,7 +48,7 @@ def main():
     screen.onkey(key="Up", fun=player.move_up)
     
     # game function
-    game(screen, score)
+    game(screen, score, player)
 
     # exit the screen on click
     screen.exitonclick()
