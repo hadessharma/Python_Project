@@ -20,9 +20,7 @@ def main():
     screen.onkey(key="Down", fun=snake.move_down)
     screen.onkey(key="Left", fun=snake.move_left)
     screen.onkey(key="Right", fun=snake.move_right)
-    snake.start_game()
-    
-    
+  
     game_is_on = True
     
     while game_is_on:
@@ -36,14 +34,16 @@ def main():
         snake.move()
         # Detect collison with wall
         if snake.snake[0].xcor() > 280 or snake.snake[0].xcor() < -280 or snake.snake[0].ycor() > 280 or snake.snake[0].ycor() < -280: 
-            scoreboard.game_over()
-            game_is_on = False
+            scoreboard.reset()
+            snake.reset()
+            #game_is_on = False
             
         # Detect collion with the tail
         for segment in snake.snake[1:]:
             if snake.snake[0].distance(segment) < 10:
-                scoreboard.game_over()
-                game_is_on = False
+                scoreboard.reset()
+                snake.reset()
+                #game_is_on = False
         
 
 if __name__ == '__main__':
