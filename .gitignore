@@ -163,4 +163,5 @@ cython_debug/
 # removing unneccesary project
 /file-handling
 /data-handling
+/list_dict
 /day-*
