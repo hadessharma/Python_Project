@@ -1,30 +1,51 @@
 from tkinter import *
 import time
+import math
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+REPS = 0
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 def start_timer():
-    count_down(25.00)
+    global REPS
+    REPS += 1
+    if REPS % 8 == 0:
+        count_down(LONG_BREAK_MIN*60)
+        label_top.config(text='LONG BREAK!', fg=RED)
+        label_tick.config(text= label_tick.cget('text') + (u'\N{check mark}'))
+    elif REPS%2 == 0:
+        count_down(SHORT_BREAK_MIN*60)
+        label_top.config(text='SHORT BREAK!', fg=PINK)
+    else:
+        count_down(WORK_MIN*60)
+        label_top.config(text='WORK NOW!', fg=GREEN)
+
 
 def reset_timer():
-    pass
+    global REPS
+    REPS = 0
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
        
     
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
-    if count<0:
-        return
-    canvas.itemconfig(timer_text, text = '%.2f' % count)
-    window.after(1000, count_down, count-.01)
+    count_min = math.floor(count / 6000)
+    count_sec = count % 6000
+    if count_sec < 10:
+        count_sec = f'0{count_sec}'
+        
+    canvas.itemconfig(timer_text, text= f'{count_min}:{count_sec}')
+    if count > 0:
+        window.after(1000, count_down, count - 1)
+    else:
+        start_timer()
         
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -57,7 +78,7 @@ button_reset.grid(column=2, row=2)
 
 # tick marks at the bottom
 
-label_tick = Label(text=u'\N{check mark}', font=(FONT_NAME, 15, 'bold'), bg=YELLOW, fg=GREEN)
+label_tick = Label(font=(FONT_NAME, 15, 'bold'), bg=YELLOW, fg=GREEN)
 label_tick.grid(column=1, row=3)
 
 
