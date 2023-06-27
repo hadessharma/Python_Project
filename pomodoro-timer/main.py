@@ -7,12 +7,21 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
+WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 REPS = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
+def reset_timer():
+    global REPS
+    REPS = 0
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text = f'00:00')
+    label_tick.config(text='')
+    label_top.config(text='TIMER!', fg=GREEN)
+# ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
     global REPS
     REPS += 1
@@ -27,23 +36,17 @@ def start_timer():
         count_down(WORK_MIN*60)
         label_top.config(text='WORK NOW!', fg=GREEN)
 
-
-def reset_timer():
-    global REPS
-    REPS = 0
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
-       
-    
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
-    count_min = math.floor(count / 6000)
-    count_sec = count % 6000
+    global timer
+    count_min = math.floor(count / 60)
+    count_sec = count % 60
     if count_sec < 10:
         count_sec = f'0{count_sec}'
         
     canvas.itemconfig(timer_text, text= f'{count_min}:{count_sec}')
     if count > 0:
-        window.after(1000, count_down, count - 1)
+       timer =  window.after(1000, count_down, count - 1)
     else:
         start_timer()
         
