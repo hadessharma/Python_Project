@@ -1,8 +1,21 @@
 from tkinter import *
+import random
+
+DEFAULT_USER = 'scsa'
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
+def save_password():
+    with open('./password-vault/pass.txt', 'a') as file:
+        file.write(f'{entry_website.get()} | {entry_user.get()} | {entry_pass.get()}\n')
+    
+    # clear fields once saved
+    entry_pass.delete(0, END)
+    entry_website.delete(0, END)
+    
+    #focus back to website entry
+    entry_website.focus()
+    
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title('Password Manager')
@@ -17,16 +30,17 @@ canvas.grid(column=1, row=0)
 label_website = Label(text='Website:')
 label_website.grid(column=0, row=1)
 
-text_website = Entry(width=35)
-text_website.grid(column=1, row= 1, columnspan=2, sticky='EW')
-
+entry_website = Entry(width=35)
+entry_website.grid(column=1, row= 1, columnspan=2, sticky='EW')
+entry_website.focus()
 # email/username entry
 
 label_user = Label(text='Email/Username:')
 label_user.grid(column=0, row=2)
 
-text_user = Entry(width=35)
-text_user.grid(column=1, row=2, columnspan=2, sticky='EW')
+entry_user = Entry(width=35)
+entry_user.grid(column=1, row=2, columnspan=2, sticky='EW')
+entry_user.insert(0, DEFAULT_USER)
 
 # Password entry
 
@@ -43,7 +57,7 @@ button_generate_pass.grid(column=2, row=3, sticky='EW')
 
 # add button
 
-button_add = Button(text='Add', width=36)
+button_add = Button(text='Add', width=36, command=save_password)
 button_add.grid(column=1, row=4, columnspan=2, sticky='EW')
 
     
