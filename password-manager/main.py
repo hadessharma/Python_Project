@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import random
 
 DEFAULT_USER = 'scsa'
@@ -6,14 +7,27 @@ DEFAULT_USER = 'scsa'
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
-    with open('./password-vault/pass.txt', 'a') as file:
-        file.write(f'{entry_website.get()} | {entry_user.get()} | {entry_pass.get()}\n')
+    # check if website or password is empty
+    if len(entry_website.get()) == 0:
+        messagebox.showerror(title='Website!', message='Please enter valid website.')
+        return
+    if len(entry_pass.get()) == 0:
+        messagebox.showerror(title='Password!', message='Please enter a valid password')
+        return
+    
+    # checking if the details submitted is okay
+    is_okay = messagebox.askokcancel(title=entry_website.get(), message=f'These are the details entered: \nEmail: {entry_user.get()}\nPassword: {entry_pass.get()}')
+
+    if is_okay:   
+        # save password into the file pass.txt
+        with open('./password-manager/pass.txt', 'a') as file:
+            file.write(f'{entry_website.get()}|{entry_user.get()}|{entry_pass.get()}\n')
     
     # clear fields once saved
     entry_pass.delete(0, END)
     entry_website.delete(0, END)
     
-    #focus back to website entry
+    # focus back to website entry
     entry_website.focus()
     
 # ---------------------------- UI SETUP ------------------------------- #
@@ -22,7 +36,7 @@ window.title('Password Manager')
 window.config(padx= 20, pady= 20)
 
 canvas = Canvas(width=200, height=200)
-lock_image = PhotoImage(file='./password-vault/logo.png')
+lock_image = PhotoImage(file='./password-manager/logo.png')
 canvas.create_image(100, 100, image = lock_image)
 canvas.grid(column=1, row=0)
 
