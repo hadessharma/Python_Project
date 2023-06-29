@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import pyperclip
 import random
 import string
 
@@ -35,7 +36,9 @@ def generate_password():
     random.shuffle(password)
     password = ''.join(password)
     
-    return password
+    entry_pass.delete(0, END)
+    entry_pass.insert(0, password)
+    pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -99,7 +102,7 @@ entry_pass.grid(column=1, row=3, sticky='EW')
 
 # generate password button
 
-button_generate_pass = Button(text='Generate Password', width=15)
+button_generate_pass = Button(text='Generate Password', width=15, command=generate_password)
 button_generate_pass.grid(column=2, row=3, sticky='EW')
 
 # add button
