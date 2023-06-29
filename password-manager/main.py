@@ -1,9 +1,42 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import string
 
 DEFAULT_USER = 'scsa'
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_password():
+    s_lower  = list(string.ascii_lowercase)
+    s_upper  = list(string.ascii_uppercase)
+    s_digits = list(string.digits)
+    s_pun    = list(string.punctuation)
+
+    random.shuffle(s_lower)
+    random.shuffle(s_upper)
+    random.shuffle(s_digits)
+    random.shuffle(s_pun)
+
+    len_of_password = random.randint(8,12)
+
+    part1 = round(len_of_password * .3)
+    part2 = round(len_of_password * .2)
+
+    password = []
+
+    for _ in range(part1):
+        password.append(s_lower[_])
+        password.append(s_upper[_])
+    
+    for _ in range(part2):
+        password.append(s_digits[_])
+        password.append(s_pun[_])
+
+    random.shuffle(password)
+    password = ''.join(password)
+    
+    return password
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
