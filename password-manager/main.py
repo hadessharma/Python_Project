@@ -93,9 +93,9 @@ def search_password():
     
     with open('./password-manager/pass.json', 'r') as data_file:
         data = json.load(data_file)
-        try:
+        if data.get(entry_website.get()):
             messagebox.showinfo(title='Password found', message= f'For {entry_website.get()},\n user: {data.get(entry_website.get()).get("user")}\n pass: {data.get(entry_website.get()).get("password")}')
-        except:
+        else:
             messagebox.showerror(title='Passowrd not found', message= f'No data found for {entry_website.get()}')
             
 # ---------------------------- UI SETUP ------------------------------- #
