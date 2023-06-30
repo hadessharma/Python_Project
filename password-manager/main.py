@@ -5,7 +5,7 @@ import random
 import string
 import json
 
-DEFAULT_USER = 'scsa'
+DEFAULT_USER = 'Default user'
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
