@@ -5,7 +5,7 @@ import random
 import string
 import json
 
-DEFAULT_USER = 'Default user'
+DEFAULT_USER = 'abcd@gmail.com'
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -96,7 +96,7 @@ def search_password():
         data = json.load(data_file)
         try:
             messagebox.showinfo(title='Password found', message= f'For {entry_website.get()},\n user: {data.get(entry_website.get()).get("user")}\n pass: {data.get(entry_website.get()).get("password")}')
-        except:
+        except KeyError:
             messagebox.showerror(title='Passowrd not found', message= f'No data found for {entry_website.get()}')
             
 # ---------------------------- UI SETUP ------------------------------- #
