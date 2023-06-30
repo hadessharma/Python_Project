@@ -78,14 +78,13 @@ def save_password():
         else:
             with open('./password-manager/pass.json', 'w') as data_file:
                 json.dump(data, data_file, indent=4)
+        finally:    
+            # clear fields once saved
+            entry_pass.delete(0, END)
+            entry_website.delete(0, END)
             
-            
-        # clear fields once saved
-        entry_pass.delete(0, END)
-        entry_website.delete(0, END)
-        
-        # focus back to website entry
-        entry_website.focus()
+            # focus back to website entry
+            entry_website.focus()
     
 # ---------------------------- SEARCH PASSWORD ------------------------------- #
 
@@ -96,7 +95,7 @@ def search_password():
         data = json.load(data_file)
         try:
             messagebox.showinfo(title='Password found', message= f'For {entry_website.get()},\n user: {data.get(entry_website.get()).get("user")}\n pass: {data.get(entry_website.get()).get("password")}')
-        except KeyError:
+        except:
             messagebox.showerror(title='Passowrd not found', message= f'No data found for {entry_website.get()}')
             
 # ---------------------------- UI SETUP ------------------------------- #
