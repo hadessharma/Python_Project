@@ -2,7 +2,6 @@ from tkinter import *
 import pandas as pd
 import random
 BACKGROUND_COLOR = "#B1DDC6"
-FIRST_RUN = True
 
 try:
     df       = pd.read_csv('./flashcard-app/data/words_to_learn.csv')
@@ -10,7 +9,6 @@ try:
 except:
     df   = pd.read_csv('./flashcard-app/data/french_words.csv')
     data_raw = df.to_dict(orient='records')
-    FIRST_RUN = False
     
 data_list = [ {i['French'] : i['English']} for i in data_raw]
 
