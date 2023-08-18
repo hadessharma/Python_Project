@@ -15,6 +15,11 @@ import pandas as pd
 import os, os.path
 import random
 
+import secret # create a secret.py and add email and key
+
+my_email = secret.email
+my_key = secret.key
+
 NOW = dt.datetime.now()
 MONTH = NOW.month
 DAY = NOW.day
@@ -48,8 +53,13 @@ def select_letter():
 # send birthday wishes over email
 def send_birthday_wishes(letter, birthday):
     for ind in birthday.index:
-        letter = letter.replace('[NAME]', birthday['name'][ind])
-        print(letter)
+        mail_content = letter.replace('[NAME]', birthday['name'][ind])
+        
+        with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=my_key)
+
+            connection.sendmail(from_addr=my_email, to_addrs=birthday['email'][ind], msg=f'Subject:Birthay Wishes\n\n{mail_content}')
 
 
 
